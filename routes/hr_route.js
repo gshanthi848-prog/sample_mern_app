@@ -1,11 +1,17 @@
 let express = require('express');
 let router = express.Router();
+let { users } = require('../models/users');
+let { tasks } = require('../models/tasks');
+
 router.get("/viewemployees", (req, res) => {
     res.send("View employees route");
 });
 //localhost:3000/api/hr/assigntask
-router.post("/assigntask", (req, res) => {
-    res.send("Assign task route");
+router.post("/assign-task",async (req, res) => {
+    let data = req.body;
+    let newTask = tasks(data);
+    let result = await newTask.save();    
+    res.send(result);
 });
 //localhost:3000/api/hr/viewtasks
 router.get("/viewtasks", (req, res) => {
